@@ -1,0 +1,87 @@
+version: '3.7'
+
+services:
+
+  web:
+    build: ./src
+    image: web
+    container_name: web
+    ports:
+      - 8000:8000
+    volumes:
+      - ./src:/usr/src/app
+    command: gunicorn -b 0.0.0.0:8000 app:app
+    environment:
+      - CELERY_BROKER=amqp://rabbitmq:5672
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+      - rabbitmq
+
+  celery1:
+    image: web
+    container_name: celery_worker1
+    volumes:
+      - ./src:/usr/src/app
+      - ./src/logs:/usr/src/app/logs
+    command: celery -A app.tasks worker --loglevel=info  --logfile=logs/celery.log --concurrency=2 -n worker1@%h
+    environment:
+      - CELERY_BROKER=amqp://rabbitmq:5672
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+      - rabbitmq
+
+  celery2:
+    image: web
+    container_name: celery_worker2
+    volumes:
+      - ./src:/usr/src/app
+      - ./src/logs:/usr/src/app/logs
+    command: celery -A app.tasks worker --loglevel=info  --logfile=logs/celery.log --concurrency=2 -n worker2@%h
+    environment:
+      - CELERY_BROKER=amqp://rabbitmq:5672
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+      - rabbitmq
+
+  celery3:
+    image: web
+    container_name: celery_worker3
+    volumes:
+      - ./src:/usr/src/app
+      - ./src/logs:/usr/src/app/logs
+    command: celery -A app.tasks worker --loglevel=info  --logfile=logs/celery.log --concurrency=2 -n worker3@%h
+    environment:
+      - CELERY_BROKER=amqp://rabbitmq:5672
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+      - rabbitmq
+
+  redis:
+    image: redis:5.0.3-alpine
+    container_name: redis
+
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  monitor:
+    image: web
+    container_name: flower
+    ports:
+      - 5555:5555
+    command: flower -A app.tasks --port=5555 --broker=amqp://rabbitmq:5672
+    depends_on:
+      - web
+      - redis
+      - rabbitmq
