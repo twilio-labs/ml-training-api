@@ -3,24 +3,25 @@
 
 import json
 import falcon
+import logging
 from celery.result import AsyncResult
-
+import sys
 from app.tasks import train
 
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
-class Ping(object):
+
+class Ping:
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
         resp.body = json.dumps('pong!')
 
 
-class CreateTask(object):
+class CreateTask:
 
     def on_post(self, req, resp):
-        # raw_json = req.media
-        # task = train.delay(raw_json)
-        task = train.delay()
-
+        obj = req.get_media(default_when_empty={})
+        task = train.delay(training_parameters=obj)
         resp.status = falcon.HTTP_200
         result = {
             'status': 'success',
@@ -31,7 +32,7 @@ class CreateTask(object):
         resp.body = json.dumps(result)
 
 
-class CheckStatus(object):
+class CheckStatus:
 
     def on_get(self, req, resp, task_id):
         task_result = AsyncResult(task_id)

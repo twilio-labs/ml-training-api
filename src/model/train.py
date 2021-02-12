@@ -32,16 +32,19 @@ class Model:
         pass
 
     def fit(self, training_parameters=None):
-        hparams = {'alpha': .01}
+        self.logger.info(f'external parameters {training_parameters}')
+        self.clf = MultinomialNB()
+        hparams = self.clf.get_params()
         if training_parameters:
             hparams = dict((k, training_parameters.get(k, v)) for k, v in hparams.items())
+        self.clf.set_params(**hparams)
         self.logger.info(f'Fitting the model with hparams {hparams}')
 
-        self.clf = MultinomialNB(**hparams)
+        # fit model
         self.clf.fit(self.X_train, self.y_train)
         t = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-        pickle.dump(self.clf, open(f"sto_model_{t}.pkl", "wb"))
-        return f"sto_model_{t}.pkl"
+        pickle.dump(self.clf, open(f"model_{t}.pkl", "wb"))
+        return f"model_{t}.pkl"
 
     def evaluate(self):
         self.logger.info("Evaluating the model...")
