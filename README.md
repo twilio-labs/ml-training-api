@@ -16,11 +16,11 @@ $ docker-compose up -d --build
 
 Open your browser to http://localhost:8000/ping to view the app or to http://localhost:5555 to view the Flower dashboard.
 
-Trigger a new task:
+Trigger a new task with hyperparameters (optional):
 
 ```sh
 $ curl -X POST http://localhost:8000/create \
-    -d '{"random_state": 1, "n_jobs":10}' \
+    -d '{"alpha":0.5}' \
     -H "Content-Type: application/json"
 ```
 
