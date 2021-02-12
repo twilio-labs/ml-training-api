@@ -4,6 +4,7 @@ A service for training machine learning models asynchronously
 ## Falcon + Celery
 
 Example of how to handle training machine learning models asynchronously with Falcon, Celery, and message queues
+![diagram](/diagram.png)
 
 ### Quick Start
 
