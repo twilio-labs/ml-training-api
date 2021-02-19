@@ -7,3 +7,4 @@ tornado>=4.2.0,<6.0.0
 pandas
 datetime
 sklearn
+pytest
