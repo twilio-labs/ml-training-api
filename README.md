@@ -37,3 +37,7 @@ The [model](https://github.com/twilio-labs/ml-training-api/tree/main/src/model) 
 ## Let's work together
 
 Everything in this toolkit is released under [Twilio Labs](https://www.twilio.com/docs/labs) and fully open-source. If you find any problems with this, [please file an issue](https://github.com/twilio-labs/ml-training-api/issues) or even create a pull request to work together with us on the toolkit. We would love to hear your ideas and feedback!
+
+## License
+
+MIT
