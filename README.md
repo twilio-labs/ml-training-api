@@ -1,7 +1,7 @@
 # ml-training-api
 [![A Twilio Labs Project](https://img.shields.io/static/v1?label=&message=Twilio-Labs&color=F22F46&labelColor=0D122B&logo=twilio&style=flat-square)](https://www.twilio.com/labs)
 
-This is a simple framework of a service for training machine learning models asynchronously.
+This is a simple service framework for training machine learning models asynchronously.
 
 ## Falcon + Celery
 
