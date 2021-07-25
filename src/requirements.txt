@@ -8,3 +8,4 @@ pandas
 datetime
 sklearn
 pytest
+scikit-learn>=0.24.2 # not directly required, pinned by Snyk to avoid a vulnerability
