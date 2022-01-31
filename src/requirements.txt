@@ -1,4 +1,4 @@
-celery==4.3
+celery==5.2.2
 falcon==3.0.0b1
 flower==0.9.2
 gunicorn==19.9.0
