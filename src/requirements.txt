@@ -3,9 +3,9 @@ falcon==3.0.0b1
 flower==0.9.2
 gunicorn==19.9.0
 redis==3.2.0
-tornado>=4.2.0,<6.0.0
+tornado>=6.4.1,<6.0.0
 pandas
 datetime
 sklearn
 pytest
-scikit-learn>=0.24.2 # not directly required, pinned by Snyk to avoid a vulnerability
+scikit-learn>=1.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
